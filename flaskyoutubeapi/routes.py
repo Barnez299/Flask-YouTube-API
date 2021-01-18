@@ -11,14 +11,22 @@ def index():
         'key': current_app.config['YOUTUBE_API_KEY'],
         'q': 'learn flask',
         'part': 'snippet',
-        'max results': 9,
+        'maxResults': 9,
         'type': 'video'
 
     }
 
     r = requests.get(search_url, params=search_params)
 
-    print(r.json()['items'][0]['id']['videoId'])
+    results = r.json()['items']
+
+
+
+    video_ids =[]
+    for result in results:
+        video_ids.append(result['id']['videoId'])
+
+    print(video_ids)
 
     return render_template('index.html')
 
